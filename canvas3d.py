@@ -20,7 +20,9 @@ from Tkinter import Tk, Canvas
 from math3d import (
     Vector,
     planeNormalAndDistance,
-    rotx, roty, rotz,
+    rotx,
+    roty,
+    rotz,
     radians,
     )
 from math import tan, pi
@@ -32,10 +34,9 @@ def G(L, a):
 
 
 class Canvas3D(Canvas):
-    def __init__(self, master=None, *args, **kw):
+
+    def __init__(self, master=None, fps=20, *args, **kw):
         Canvas.__init__(self, *((master,) + args), **kw)
-        self.pack(expand=1, fill='both')
-        self.update()
 
         self.frame = Frame3D()
         self.items = {}
@@ -47,6 +48,8 @@ class Canvas3D(Canvas):
         self.xyaxes()
 
         self.bind('<Configure>', self.resize_callback)
+
+        self.fps_ms = 1000 / fps # Frames per second in milliseconds.
 
         self.focal_distance = 2.2
         self.x_arc_of_view = 73.0
@@ -60,7 +63,6 @@ class Canvas3D(Canvas):
             self.x_arc_of_view, self.y_arc_of_view,
             self.focal_distance,
             )
-#        self._updater()
 
     def visible(self, v):
         return self._frustum.visible(v)
@@ -70,18 +72,14 @@ class Canvas3D(Canvas):
         if z == 0.0:
             z = 1 # z = tolerance?
         FD = self.focal_distance
-        w = self.w/2
+        w = self.w / 2
         f = self.f 
-        h = self.h/2
+        h = self.h / 2
         u = self.u
 
         return (
-            int(
-                w + v.x * f / (z + f * FD)
-                ),
-            int(
-                h - v.y * u / (z + u * FD)
-                )
+            int(w + v.x * f / (z + f * FD)),
+            int(h - v.y * u / (z + u * FD))
             )
 
     def xyaxes(self):
@@ -120,17 +118,20 @@ class Canvas3D(Canvas):
 
         self.update_idletasks()
         self.update()
-        fps_ms = 1000/20
-        self.after(fps_ms, self._updater)
+        self.after(self.fps_ms, self._updater)
 
 
 class Frustum:
 
-    def __init__(self,
-                 width=320, height=240,
-                 x_arc=73.0, y_arc=73.0,
-                 focal_distance=2.2,
-                 depth=5000.0):
+    def __init__(
+        self,
+        width=320,
+        height=240,
+        x_arc=73.0,
+        y_arc=73.0,
+        focal_distance=2.2,
+        depth=5000.0,
+        ):
 
         self.w, self.h = width, height
         self.xarc, self.yarc = x_arc, y_arc
@@ -140,12 +141,10 @@ class Frustum:
         self.T = Vector()
         self.RM = rotx(0) * roty(0) * rotz(0)
 
-        self._frustum_planes = None
-        self._frustum_planes_dirty = True
-
-        # Get a list of eight "blank" new Vectors.
+        # Create a list of eight "blank" new Vectors. These will be the
+        # corners of the frustum, used to determine the planes beyond
+        # which a given point is outside the viewable space.
         self._frustum = [Vector() for _ in range(8)]
-        self._frustum_dirty = True
 
         self._reset()
         self._getFrustumPlanes()
@@ -193,6 +192,7 @@ class Frustum:
             if acr <= 0.0: return False
             if act <= 0.0: return False
             if acb >  0.0: return True
+            return False
 
     def _getFrustum(self):
         """
@@ -254,6 +254,7 @@ if __name__ == '__main__':
     root = Tk()
     root.title("Rotating Cube Demo")
     c = Canvas3D(root)
+    c.pack(expand=1, fill='both')
 
 ## Changing the frustum's "frame".
 #    c._frustum.T.z += 100.0
@@ -269,9 +270,10 @@ if __name__ == '__main__':
     # Make a cube.
     cube_frame = Frame3D()
     c.frame.subframes.append(cube_frame)
-    for x in (-1, 1):
-        for y in (-1, 1):
-            for z in (-1, 1):
+    coords = -1, 1
+    for x in coords:
+        for y in coords:
+            for z in coords:
                 d = dot(c, 100.0 * x, 100.0 * y, 100.0 * z)
                 cube_frame.things.append(d)
 

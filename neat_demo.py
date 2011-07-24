@@ -25,6 +25,7 @@ from scene import TkinterCanvasThing3D as dot
 root = Tk()
 root.title("Rotating Cube Demo")
 c = Canvas3D(root)
+c.pack(expand=1, fill='both')
 
 
 # Zoom out a little.
@@ -40,29 +41,24 @@ c.frame.things.append(origin)
 cube_frame = Frame3D()
 c.frame.subframes.append(cube_frame)
 
+
 # Add a Z component to the cube frame's translation to offset the cube
 # from the world frame.
 cube_frame.T.z += 300.0
 
 
 # Make a cube.
-F = -1, 1
-corners = (
-    (x, y, z)
-    for x in F
-        for y in F
-            for z in F
-    )
-for x, y, z in corners:
-    d = dot(c, 100.0 * x, 100.0 * y, 100.0 * z)
-    cube_frame.things.append(d)
+F = -100.0, 100.0
+for x, y, z in ((x, y, z) for x in F for y in F for z in F):
+    cube_frame.things.append(dot(c, x, y, z))
 
 
 # Apply a rotation repeatedly to our cube.    
-N = roty(360/30/3) # 4 degrees.
+rotation = roty(360/30/3) # 4 degrees.
 def delta():
-    cube_frame.RM *= N
-    c.after(60, delta)
+    cube_frame.RM *= rotation
+    c.after(60, delta) # Retrigger every sixty milliseconds.
+
 
 # Start everything running.
 delta()
