@@ -120,7 +120,7 @@ class Canvas3D(Canvas):
 
         self.update_idletasks()
         self.update()
-	fps_ms = 1000/20
+        fps_ms = 1000/20
         self.after(fps_ms, self._updater)
 
 
