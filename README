@@ -1,0 +1,26 @@
+This is a simple 3D math module and some code that uses it to render objects in a
+Tkinter Canvas and move them around in 3D.
+
+It's still in a rough state, although it works. I'll clean it up.
+
+There's no installation. Simply change into the directory and run the
+neat_demo.py script to try it out. This will open a Tk window and draw a
+rotating cube. Woo!
+
+Please send questions or comments to the author at sajmikins@gmail.com
+
+
+    Copyright 2011 Simon Forman
+
+    Tkinter3D is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Tkinter3D is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Tkinter3D.  If not, see <http://www.gnu.org/licenses/>.
