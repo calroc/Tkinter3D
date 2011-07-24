@@ -23,6 +23,7 @@ from scene import TkinterCanvasThing3D as dot
 
 
 root = Tk()
+root.title("Rotating Cube Demo")
 c = Canvas3D(root)
 
 
