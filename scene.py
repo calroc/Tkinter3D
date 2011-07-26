@@ -16,11 +16,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Tkinter3D.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 from math3d import (
     scalar_types,
     Vector,
     Matrix,
-    rotx, roty, rotz,
+    rotx,
+    roty,
+    rotz,
     )
 
 
@@ -28,26 +31,32 @@ class Frame3D:
     '''
     A frame, has scale, translation, and rotation.
     '''
-    def __init__(self,
+
+    def __init__(
+        self,
         scale=1.0,
         translation=None,
         rotation=None,
         ):
 
         if not isinstance(scale, scalar_types):
-            raise TypeError, n
+            raise TypeError, scale
         self.s = scale
 
         # Translation.
         if isinstance(translation, Vector):
             self.T = translation
 
-        elif isinstance(translation, (tuple, list)):
-            if not len(translation) == 3:
+        elif translation is not None:
+
+            translation = tuple(translation)
+
+            if not (
+                len(translation) == 3
+                and all(isinstance(t, scalar_types) for t in translation)
+                ):
                 raise ValueError, translation
-            for t in translation:
-                if not isinstance(t, scalar_types):
-                    raise TypeError, t
+
             self.T = Vector(*translation)
 
         else:
@@ -57,17 +66,18 @@ class Frame3D:
         if isinstance(rotation, Matrix):
             self.RM = rotation
 
-        elif isinstance(rotation, (tuple, list)):
-            if not len(rotation) == 3:
+        elif rotation is not None:
+
+            rotation = tuple(rotation)
+
+            if not (
+                len(rotation) == 3
+                and all(isinstance(a, scalar_types) for a in rotation)
+                ):
                 raise ValueError, rotation
-            for a in rotation:
-                if not isinstance(a, scalar_types):
-                    raise TypeError, a
-            self.RM = (
-                rotx(rotation[0])
-                * roty(rotation[1])
-                * rotz(rotation[2])
-                )
+
+            ax, ay, az = rotation
+            self.RM = rotx(ax) * roty(ay) * rotz(az)
 
         else:
             self.RM = rotx(0) * roty(0) * rotz(0)
@@ -95,6 +105,7 @@ class Thing3D:
     '''
     A thing that has a location in three-space.
     '''
+
     def __init__(self, x=0.0, y=0.0, z=0.0):
         for n in (x, y, z):
             if not isinstance(n, scalar_types):
@@ -120,7 +131,7 @@ class TkinterCanvasThing3D(Thing3D):
         self.canvas = canvas
 
         # Width in pixels of canvas dot.
-        self._width = settings.pop('width', None) or 3
+        self._width = (settings.pop('width', None) or 3) / 2
 
         self.settings = settings
         self.settings.setdefault('fill', 'green')
@@ -137,18 +148,21 @@ class TkinterCanvasThing3D(Thing3D):
         '''
         Manage this dot on its Canvas.
         '''
-        # Get our width and vector.
+
         W = self._width
+
+        top, left, bottom, right = x - W, y - W, x + W, y + W
 
         # Move our item if we have one.
         if self.item:
-            self.canvas.coords(self.item, x - W, y - W, x + W, y + W)
+            self.canvas.coords(self.item, top, left, bottom, right)
 
         # Make an oval item and remember its id.
         else:
             self.item = self.canvas.create_oval(
-                x - W, y - W, x + W, y + W,
+                top,
+                left,
+                bottom,
+                right,
                 **self.settings
                 )
-
-

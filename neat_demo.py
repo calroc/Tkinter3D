@@ -33,7 +33,7 @@ c.frame.T.z += -300.0
 
 
 # Create a dot at world origin (0, 0, 0).
-origin = dot(c)
+origin = dot(c, width=4)
 c.frame.things.append(origin)
 
 
@@ -50,7 +50,7 @@ cube_frame.T.z += 300.0
 # Make a cube.
 F = -100.0, 100.0
 for x, y, z in ((x, y, z) for x in F for y in F for z in F):
-    cube_frame.things.append(dot(c, x, y, z))
+    cube_frame.things.append(dot(c, x, y, z, width=6))
 
 
 # Apply a rotation repeatedly to our cube.    
