@@ -1,1 +1,1 @@
-Search.setIndex({desctypes:{},terms:{index:0,search:0,tkinter3d:0,welcom:0,modul:0,docstr:0,indic:0,content:0,canvas3d:0,tabl:0,document:0,page:0},titles:["Welcome to Tkinter3D&#8217;s documentation!"],modules:{canvas3d:0},descrefs:{},filenames:["index"]})
+Search.setIndex({desctypes:{},terms:{index:0,search:0,tkinter3d:0,welcom:0,modul:[0,1],docstr:1,indic:0,content:0,canvas3d:[0,1],tabl:0,document:0,page:0},titles:["Welcome to Tkinter3D&#8217;s documentation!","Canvas3D"],modules:{canvas3d:1},descrefs:{},filenames:["index","canvas3d"]})
