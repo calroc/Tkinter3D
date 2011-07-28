@@ -16,6 +16,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Tkinter3D.  If not, see <http://www.gnu.org/licenses/>.
 #
+'''
+A Docstring for canvas3d module.
+'''
 from Tkinter import Tk, Canvas
 from math3d import (
     Vector,
@@ -34,6 +37,9 @@ def G(L, a):
 
 
 class Canvas3D(Canvas):
+    '''
+    A Tkinter Canvas adapted to serve as a 3D viewer.
+    '''
 
     def __init__(self, master=None, fps=20, *args, **kw):
         Canvas.__init__(self, *((master,) + args), **kw)

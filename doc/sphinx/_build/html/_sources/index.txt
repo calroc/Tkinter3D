@@ -11,6 +11,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+.. automodule:: canvas3d
+
 Indices and tables
 ==================
 

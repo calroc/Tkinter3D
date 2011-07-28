@@ -1,1 +1,1 @@
-Search.setIndex({desctypes:{},terms:{index:0,search:0,tkinter3d:0,welcom:0,modul:0,indic:0,content:0,tabl:0,document:0,page:0},titles:["Welcome to Tkinter3D&#8217;s documentation!"],modules:{},descrefs:{},filenames:["index"]})
+Search.setIndex({desctypes:{},terms:{index:0,search:0,tkinter3d:0,welcom:0,modul:0,docstr:0,indic:0,content:0,canvas3d:0,tabl:0,document:0,page:0},titles:["Welcome to Tkinter3D&#8217;s documentation!"],modules:{canvas3d:0},descrefs:{},filenames:["index"]})
