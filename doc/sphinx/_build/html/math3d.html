@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>math3d – 3D Math &mdash; Tkinter3D v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Tkinter3D v0.1 documentation" href="index.html" />
+    <link rel="next" title="scene – Support for 3D Scenes" href="scene.html" />
+    <link rel="prev" title="Welcome to Tkinter3D’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="scene.html" title="scene – Support for 3D Scenes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Tkinter3D’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Tkinter3D v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-math3d">
+<h1><tt class="xref docutils literal"><span class="pre">math3d</span></tt> &#8211; 3D Math<a class="headerlink" href="#module-math3d" title="Permalink to this headline">¶</a></h1>
+<p>Classes and functions for doing 3D math with quaternions.</p>
+<dl class="data">
+<dt id="math3d.scalar_types">
+<tt class="descclassname">math3d.</tt><tt class="descname">scalar_types</tt><a class="headerlink" href="#math3d.scalar_types" title="Permalink to this definition">¶</a></dt>
+<dd>Tuple of scalar numeric types: int, float, and long.
+(If you import <tt class="xref docutils literal"><span class="pre">math3d</span></tt> and change this before importing other
+modules in this package it will affect their type-checking behavior.)</dd></dl>
+
+<dl class="class">
+<dt id="math3d.Vector">
+<em class="property">class </em><tt class="descclassname">math3d.</tt><tt class="descname">Vector</tt><big>(</big><em>x=0.0</em>, <em>y=0.0</em>, <em>z=0.0</em><big>)</big><a class="headerlink" href="#math3d.Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>This defines a vector of three coordinates.</p>
+<dl class="method">
+<dt id="math3d.Vector.magnitude">
+<tt class="descname">magnitude</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Vector.magnitude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Vector.normalize">
+<tt class="descname">normalize</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Vector.normalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Vector.reverse">
+<tt class="descname">reverse</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Vector.reverse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Vector.triplescalar">
+<tt class="descname">triplescalar</tt><big>(</big><em>v</em>, <em>w</em><big>)</big><a class="headerlink" href="#math3d.Vector.triplescalar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="math3d.Matrix">
+<em class="property">class </em><tt class="descclassname">math3d.</tt><tt class="descname">Matrix</tt><big>(</big><em>e11=0.0</em>, <em>e12=0.0</em>, <em>e13=0.0</em>, <em>e21=0.0</em>, <em>e22=0.0</em>, <em>e23=0.0</em>, <em>e31=0.0</em>, <em>e32=0.0</em>, <em>e33=0.0</em><big>)</big><a class="headerlink" href="#math3d.Matrix" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="math3d.Matrix.determinant">
+<tt class="descname">determinant</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Matrix.determinant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Matrix.transpose">
+<tt class="descname">transpose</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Matrix.transpose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="math3d.Quaternion">
+<em class="property">class </em><tt class="descclassname">math3d.</tt><tt class="descname">Quaternion</tt><big>(</big><em>n=0.0</em>, <em>x=0.0</em>, <em>y=0.0</em>, <em>z=0.0</em>, <em>euler=False</em><big>)</big><a class="headerlink" href="#math3d.Quaternion" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="math3d.Quaternion.Rotate">
+<tt class="descname">Rotate</tt><big>(</big><em>q</em>, <em>p</em><big>)</big><a class="headerlink" href="#math3d.Quaternion.Rotate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Quaternion.getAngle">
+<tt class="descname">getAngle</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Quaternion.getAngle" title="Permalink to this definition">¶</a></dt>
+<dd>Angle of rotation about axis.</dd></dl>
+
+<dl class="method">
+<dt id="math3d.Quaternion.getAxis">
+<tt class="descname">getAxis</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Quaternion.getAxis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Quaternion.getEulerAngles">
+<tt class="descname">getEulerAngles</tt><big>(</big><em>q</em><big>)</big><a class="headerlink" href="#math3d.Quaternion.getEulerAngles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Quaternion.getScalar">
+<tt class="descname">getScalar</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Quaternion.getScalar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Quaternion.getVector">
+<tt class="descname">getVector</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Quaternion.getVector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Quaternion.magnitude">
+<tt class="descname">magnitude</tt><big>(</big><big>)</big><a class="headerlink" href="#math3d.Quaternion.magnitude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="math3d.Quaternion.vectorRotate">
+<tt class="descname">vectorRotate</tt><big>(</big><em>q</em>, <em>v</em><big>)</big><a class="headerlink" href="#math3d.Quaternion.vectorRotate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Welcome to Tkinter3D&#8217;s documentation!</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="scene.html"
+                                  title="next chapter"><tt class="docutils literal"><span class="pre">scene</span></tt> &#8211; Support for 3D Scenes</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/math3d.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="scene.html" title="scene – Support for 3D Scenes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Tkinter3D’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">Tkinter3D v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2011, Simon Forman.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>

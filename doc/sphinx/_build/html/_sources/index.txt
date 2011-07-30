@@ -11,6 +11,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   math3d
+   scene
    canvas3d
 
 Indices and tables

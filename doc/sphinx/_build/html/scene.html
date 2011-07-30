@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>scene – Support for 3D Scenes &mdash; Tkinter3D v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Tkinter3D v0.1 documentation" href="index.html" />
+    <link rel="next" title="canvas3d – Tkinter Canvas to Display 3D Entities" href="canvas3d.html" />
+    <link rel="prev" title="math3d – 3D Math" href="math3d.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="canvas3d.html" title="canvas3d – Tkinter Canvas to Display 3D Entities"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="math3d.html" title="math3d – 3D Math"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Tkinter3D v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-scene">
+<h1><tt class="xref docutils literal"><span class="pre">scene</span></tt> &#8211; Support for 3D Scenes<a class="headerlink" href="#module-scene" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="scene.Frame3D">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Frame3D</tt><big>(</big><em>scale=1.0</em>, <em>translation=None</em>, <em>rotation=None</em><big>)</big><a class="headerlink" href="#scene.Frame3D" title="Permalink to this definition">¶</a></dt>
+<dd><p>A frame of reference for applying a scale, translation, and rotation
+to a collection of <a title="scene.Thing3D" class="reference internal" href="#scene.Thing3D"><tt class="xref docutils literal"><span class="pre">Thing3D</span></tt></a> objects. It can also have
+descendant <a title="scene.Frame3D" class="reference internal" href="#scene.Frame3D"><tt class="xref docutils literal"><span class="pre">Frame3D</span></tt></a> objects that contain their own
+<a title="scene.Thing3D" class="reference internal" href="#scene.Thing3D"><tt class="xref docutils literal"><span class="pre">Thing3D</span></tt></a> objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>scale</em> (One of <a title="math3d.scalar_types" class="reference external" href="math3d.html#math3d.scalar_types"><tt class="xref docutils literal"><span class="pre">math3d.scalar_types</span></tt></a>) &#8211; A scaling factor.</li>
+<li><em>translation</em> (<a title="math3d.Vector" class="reference external" href="math3d.html#math3d.Vector"><tt class="xref docutils literal"><span class="pre">math3d.Vector</span></tt></a> or any iterable of any
+three <a title="math3d.scalar_types" class="reference external" href="math3d.html#math3d.scalar_types"><tt class="xref docutils literal"><span class="pre">math3d.scalar_types</span></tt></a>) &#8211; Specifies XYZ translation.</li>
+<li><em>rotation</em> (<a title="math3d.Matrix" class="reference external" href="math3d.html#math3d.Matrix"><tt class="xref docutils literal"><span class="pre">math3d.Matrix</span></tt></a> or any iterable of any
+three <a title="math3d.scalar_types" class="reference external" href="math3d.html#math3d.scalar_types"><tt class="xref docutils literal"><span class="pre">math3d.scalar_types</span></tt></a>) &#8211; Specifies a rotation around each of the X, Y, and Z
+axises. If given as discrete values (i.e. not a
+<a title="math3d.Matrix" class="reference external" href="math3d.html#math3d.Matrix"><tt class="xref docutils literal"><span class="pre">math3d.Matrix</span></tt></a>) they are interpreted as degrees.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><tt class="xref docutils literal"><span class="pre">TypeError</span></tt> if the constraints on parameters are not
+met.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Each of the above three parameters becomes an instance attribute of
+the resulting <a title="scene.Frame3D" class="reference internal" href="#scene.Frame3D"><tt class="xref docutils literal"><span class="pre">Frame3D</span></tt></a> object that you can manipulate at
+runtime to affect subsequent calls to <a title="scene.Frame3D.yieldTransformed" class="reference internal" href="#scene.Frame3D.yieldTransformed"><tt class="xref docutils literal"><span class="pre">yieldTransformed()</span></tt></a>.</p>
+<dl class="attribute">
+<dt id="scene.Frame3D.s">
+<tt class="descname">s</tt><a class="headerlink" href="#scene.Frame3D.s" title="Permalink to this definition">¶</a></dt>
+<dd>(Instance attribute.) Scale factor applied by
+<a title="scene.Frame3D.yieldTransformed" class="reference internal" href="#scene.Frame3D.yieldTransformed"><tt class="xref docutils literal"><span class="pre">yieldTransformed()</span></tt></a>.</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Frame3D.T">
+<tt class="descname">T</tt><a class="headerlink" href="#scene.Frame3D.T" title="Permalink to this definition">¶</a></dt>
+<dd>(Instance attribute.) <a title="math3d.Vector" class="reference external" href="math3d.html#math3d.Vector"><tt class="xref docutils literal"><span class="pre">math3d.Vector</span></tt></a> Translation applied
+by <a title="scene.Frame3D.yieldTransformed" class="reference internal" href="#scene.Frame3D.yieldTransformed"><tt class="xref docutils literal"><span class="pre">yieldTransformed()</span></tt></a>.</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Frame3D.RM">
+<tt class="descname">RM</tt><a class="headerlink" href="#scene.Frame3D.RM" title="Permalink to this definition">¶</a></dt>
+<dd>(Instance attribute.) <a title="math3d.Matrix" class="reference external" href="math3d.html#math3d.Matrix"><tt class="xref docutils literal"><span class="pre">math3d.Matrix</span></tt></a> Rotation applied by
+<a title="scene.Frame3D.yieldTransformed" class="reference internal" href="#scene.Frame3D.yieldTransformed"><tt class="xref docutils literal"><span class="pre">yieldTransformed()</span></tt></a>.</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Frame3D.things">
+<tt class="descname">things</tt><a class="headerlink" href="#scene.Frame3D.things" title="Permalink to this definition">¶</a></dt>
+<dd>(Instance attribute.) A list of <a title="scene.Thing3D" class="reference internal" href="#scene.Thing3D"><tt class="xref docutils literal"><span class="pre">Thing3D</span></tt></a> objects.  Append
+<a title="scene.Thing3D" class="reference internal" href="#scene.Thing3D"><tt class="xref docutils literal"><span class="pre">Thing3D</span></tt></a> objects to this list to have them yielded by
+<a title="scene.Frame3D.yieldTransformed" class="reference internal" href="#scene.Frame3D.yieldTransformed"><tt class="xref docutils literal"><span class="pre">yieldTransformed()</span></tt></a>.</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Frame3D.subframes">
+<tt class="descname">subframes</tt><a class="headerlink" href="#scene.Frame3D.subframes" title="Permalink to this definition">¶</a></dt>
+<dd>(Instance attribute.) A list of <a title="scene.Frame3D" class="reference internal" href="#scene.Frame3D"><tt class="xref docutils literal"><span class="pre">Frame3D</span></tt></a> objects.  Append
+<a title="scene.Frame3D" class="reference internal" href="#scene.Frame3D"><tt class="xref docutils literal"><span class="pre">Frame3D</span></tt></a> objects to this list to have their
+<a title="scene.Thing3D" class="reference internal" href="#scene.Thing3D"><tt class="xref docutils literal"><span class="pre">Thing3D</span></tt></a> objects yielded by <a title="scene.Frame3D.yieldTransformed" class="reference internal" href="#scene.Frame3D.yieldTransformed"><tt class="xref docutils literal"><span class="pre">yieldTransformed()</span></tt></a>.</dd></dl>
+
+<dl class="method">
+<dt id="scene.Frame3D.transform">
+<tt class="descname">transform</tt><big>(</big><em>vector</em><big>)</big><a class="headerlink" href="#scene.Frame3D.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a Vector that is the result of appling the scale,
+translation, and rotation defined by this <a title="scene.Frame3D" class="reference internal" href="#scene.Frame3D"><tt class="xref docutils literal"><span class="pre">Frame3D</span></tt></a> to the
+given input Vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>vector</em> (<a title="math3d.Vector" class="reference external" href="math3d.html#math3d.Vector"><tt class="xref docutils literal"><span class="pre">math3d.Vector</span></tt></a>) &#8211; A Vector representing a 3D point.</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><a title="math3d.Vector" class="reference external" href="math3d.html#math3d.Vector"><tt class="xref docutils literal"><span class="pre">math3d.Vector</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Frame3D.yieldTransformed">
+<tt class="descname">yieldTransformed</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Frame3D.yieldTransformed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield each <a title="scene.Thing3D" class="reference internal" href="#scene.Thing3D"><tt class="xref docutils literal"><span class="pre">Thing3D</span></tt></a> in this <a title="scene.Frame3D" class="reference internal" href="#scene.Frame3D"><tt class="xref docutils literal"><span class="pre">Frame3D</span></tt></a> and its
+descendant <a title="scene.Frame3D" class="reference internal" href="#scene.Frame3D"><tt class="xref docutils literal"><span class="pre">Frame3D</span></tt></a> objects, modified by its scale,
+translation, and rotation.
+This is called recursively on descendant <a title="scene.Frame3D" class="reference internal" href="#scene.Frame3D"><tt class="xref docutils literal"><span class="pre">Frame3D</span></tt></a> objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">generator of two-tuples:
+(<a title="scene.Thing3D" class="reference internal" href="#scene.Thing3D"><tt class="xref docutils literal"><span class="pre">Thing3D</span></tt></a>, transformed <a title="math3d.Vector" class="reference external" href="math3d.html#math3d.Vector"><tt class="xref docutils literal"><span class="pre">math3d.Vector</span></tt></a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="scene.Thing3D">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Thing3D</tt><big>(</big><em>x=0.0</em>, <em>y=0.0</em>, <em>z=0.0</em><big>)</big><a class="headerlink" href="#scene.Thing3D" title="Permalink to this definition">¶</a></dt>
+<dd><p>A thing that has a location in three-space.</p>
+<dl class="method">
+<dt id="scene.Thing3D.getVector">
+<tt class="descname">getVector</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Thing3D.getVector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scene.Thing3D.hide">
+<tt class="descname">hide</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Thing3D.hide" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scene.Thing3D.render">
+<tt class="descname">render</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="headerlink" href="#scene.Thing3D.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="scene.TkinterCanvasThing3D">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">TkinterCanvasThing3D</tt><big>(</big><em>canvas</em>, <em>x=0.0</em>, <em>y=0.0</em>, <em>z=0.0</em>, <em>**settings</em><big>)</big><a class="headerlink" href="#scene.TkinterCanvasThing3D" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="scene.TkinterCanvasThing3D.getVector">
+<tt class="descname">getVector</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.TkinterCanvasThing3D.getVector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scene.TkinterCanvasThing3D.hide">
+<tt class="descname">hide</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.TkinterCanvasThing3D.hide" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scene.TkinterCanvasThing3D.render">
+<tt class="descname">render</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="headerlink" href="#scene.TkinterCanvasThing3D.render" title="Permalink to this definition">¶</a></dt>
+<dd>Manage this dot on its Canvas.</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="math3d.html"
+                                  title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">math3d</span></tt> &#8211; 3D Math</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="canvas3d.html"
+                                  title="next chapter"><tt class="docutils literal"><span class="pre">canvas3d</span></tt> &#8211; Tkinter Canvas to Display 3D Entities</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/scene.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="canvas3d.html" title="canvas3d – Tkinter Canvas to Display 3D Entities"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="math3d.html" title="math3d – 3D Math"
+             >previous</a> |</li>
+        <li><a href="index.html">Tkinter3D v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2011, Simon Forman.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>

@@ -71,6 +71,15 @@ class Canvas3D(Canvas):
             )
 
     def visible(self, v):
+        '''
+        Return a Boolean indicating if the given Vector is within the
+        view.
+
+        :param v: A Vector representing a 3D point.
+        :type v: :class:`math3d.Vector`
+        :rtype: Boolean
+
+        '''
         return self._frustum.visible(v)
 
     def vectorToScreen(self, v):

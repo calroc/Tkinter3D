@@ -29,7 +29,59 @@ from math3d import (
 
 class Frame3D:
     '''
-    A frame, has scale, translation, and rotation.
+    A frame of reference for applying a scale, translation, and rotation
+    to a collection of :class:`Thing3D` objects. It can also have
+    descendant :class:`Frame3D` objects that contain their own
+    :class:`Thing3D` objects.
+
+    :param scale: A scaling factor.
+    :type scale: One of :data:`math3d.scalar_types`
+
+    :param translation: Specifies XYZ translation.
+    :type translation: :class:`math3d.Vector` or any iterable of any
+       three :data:`math3d.scalar_types`
+
+    :param rotation: Specifies a rotation around each of the X, Y, and Z
+       axises. If given as discrete values (i.e. not a
+       :class:`math3d.Matrix`) they are interpreted as degrees.
+    :type rotation: :class:`math3d.Matrix` or any iterable of any
+       three :data:`math3d.scalar_types`
+
+    :raises: :exc:`TypeError` if the constraints on parameters are not
+       met.
+
+    Each of the above three parameters becomes an instance attribute of
+    the resulting :class:`Frame3D` object that you can manipulate at
+    runtime to affect subsequent calls to :meth:`yieldTransformed`.
+
+
+    .. attribute:: s
+
+        (Instance attribute.) Scale factor applied by
+        :meth:`yieldTransformed`.
+
+    .. attribute:: T
+
+        (Instance attribute.) :class:`math3d.Vector` Translation applied
+        by :meth:`yieldTransformed`.
+
+    .. attribute:: RM
+
+        (Instance attribute.) :class:`math3d.Matrix` Rotation applied by
+        :meth:`yieldTransformed`.
+
+    .. attribute:: things
+
+        (Instance attribute.) A list of :class:`Thing3D` objects.  Append
+        :class:`Thing3D` objects to this list to have them yielded by
+        :meth:`yieldTransformed`.
+
+    .. attribute:: subframes
+
+        (Instance attribute.) A list of :class:`Frame3D` objects.  Append
+        :class:`Frame3D` objects to this list to have their
+        :class:`Thing3D` objects yielded by :meth:`yieldTransformed`.
+
     '''
 
     def __init__(
@@ -38,6 +90,9 @@ class Frame3D:
         translation=None,
         rotation=None,
         ):
+
+        self.things = []
+        self.subframes = []
 
         if not isinstance(scale, scalar_types):
             raise TypeError, scale
@@ -55,7 +110,7 @@ class Frame3D:
                 len(translation) == 3
                 and all(isinstance(t, scalar_types) for t in translation)
                 ):
-                raise ValueError, translation
+                raise TypeError, translation
 
             self.T = Vector(*translation)
 
@@ -74,7 +129,7 @@ class Frame3D:
                 len(rotation) == 3
                 and all(isinstance(a, scalar_types) for a in rotation)
                 ):
-                raise ValueError, rotation
+                raise TypeError, rotation
 
             ax, ay, az = rotation
             self.RM = rotx(ax) * roty(ay) * rotz(az)
@@ -82,18 +137,32 @@ class Frame3D:
         else:
             self.RM = rotx(0) * roty(0) * rotz(0)
 
-        self.things = []
-        self.subframes = []
-
     def transform(self, vector):
         '''
-        Apply scale, translation, and rotation defined here to a Vector.
+        Return a Vector that is the result of appling the scale,
+        translation, and rotation defined by this :class:`Frame3D` to the
+        given input Vector.
+
+        :param vector: A Vector representing a 3D point.
+        :type vector: :class:`math3d.Vector`
+        :rtype: :class:`math3d.Vector`
+
         '''
         if self.s != 1:
             vector = vector * self.s
         return (vector - self.T) * self.RM
 
     def yieldTransformed(self):
+        '''
+        Yield each :class:`Thing3D` in this :class:`Frame3D` and its
+        descendant :class:`Frame3D` objects, modified by its scale,
+        translation, and rotation.
+        This is called recursively on descendant :class:`Frame3D` objects.
+
+        :rtype: generator of two-tuples:
+            (:class:`Thing3D`, transformed :class:`math3d.Vector`)
+
+        '''
         for subframe in self.subframes:
             for thing, vector in subframe.yieldTransformed():
                 yield thing, self.transform(vector)

@@ -24,7 +24,13 @@ from operator import add, sub, mul, div
 
 
 tolerance = 0.00001 # A value "close enough" to zero.
+
+#: Tuple of scalar numeric types: int, float, and long.
+#: (If you import :mod:`math3d` and change this before importing other
+#: modules in this package it will affect their type-checking behavior.) 
 scalar_types = int, float, long
+
+
 radians = 180 / pi
 
 
