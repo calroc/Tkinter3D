@@ -167,30 +167,40 @@ class Frame3D:
             for thing, vector in subframe.yieldTransformed():
                 yield thing, self.transform(vector)
         for thing in self.things:
-            yield thing, self.transform(thing.getVector())
+            yield thing, self.transform(thing.vector)
 
 
 class Thing3D:
     '''
-    A thing that has a location in three-space.
-    '''
+    A thing that has a location in three-space and knows how to render
+    itself on a :class:`canvas3d.Canvas3D`. The default rendering is a
+    circle.
 
-    def __init__(self, x=0.0, y=0.0, z=0.0):
-        for n in (x, y, z):
-            if not isinstance(n, scalar_types):
-                raise TypeError, n
+    Once a :class:`Thing3D` is created it must be appended to a
+    :attr:`Frame3D.things` list and that :class:`Frame3D`
+    must be the frame of a :class:`canvas3d.Canvas3D` or one of its
+    descendant frames in order for the :class:`Thing3D` to be rendered.
 
-        self.vector = Vector(x, y, z)
+    :param canvas: A Canvas3D object to render on. The :class:`Thing3D`
+       must be appended to its :class:`Frame3D` or one of that frame's
+       descendant frames in order to be rendered.
+    :type canvas: :class:`canvas3d.Canvas3D`
 
-    def getVector(self):
-        return self.vector
+    :param x: X coordinate.
+    :type x: One of :data:`math3d.scalar_types`
 
-    def hide(self):
-        pass
+    :param y: Y coordinate.
+    :type y: One of :data:`math3d.scalar_types`
 
-    def render(self, x, y, z):
-        pass
+    :param z: Z coordinate.
+    :type z: One of :data:`math3d.scalar_types`
 
+    :param settings: Any number of addtional keyword arguments can be
+       passed in to modify the Tkinter Canvas item used to render the
+       :class:`Thing3D`. (I.e. ``fill`` can be a color name.) One special
+       keyword argument ``width`` (:obj:`int`) is used to set the width
+       of the rendered circle, it defaults to 3. See the Tkinter Canvas
+       docs for more information.
 
     '''
 
@@ -201,7 +211,7 @@ class Thing3D:
         self.canvas = canvas
 
         # Width in pixels of canvas dot.
-        self._width = (settings.pop('width', None) or 3) / 2
+        self._width = (settings.pop('width', None) or 3)
 
         self.settings = settings
         self.settings.setdefault('fill', 'green')
@@ -210,18 +220,38 @@ class Thing3D:
         self.item = None
 
     def hide(self):
+        '''
+        Hide this :class:`Thing3D`.
+
+        Normally only called by its :class:`canvas3d.Canvas3D` during
+        rendering when it has moved out of the viewable space.
+        '''
         if self.item:
             self.canvas.delete(self.item)
             self.item = None
 
     def render(self, x, y, z):
         '''
-        Manage this dot on its Canvas.
+        Draw this :class:`Thing3D` on its :class:`canvas3d.Canvas3D`.
+
+        Normally only called by its :class:`canvas3d.Canvas3D` during
+        rendering to update its postion.
+
+        :param x: X coordinate in Canvas screen coordinates.
+        :type x: :obj:`int`
+
+        :param y: Y coordinate in Canvas screen coordinates.
+        :type y: :obj:`int`
+
+        :param z: Z depth, **not used**.
+
         '''
 
-        W = self._width
+        width = self._width
+        half = width / 2
 
-        top, left, bottom, right = x - W, y - W, x + W, y + W
+        top, left = x - half, y - half
+        bottom, right = top + width, left + width
 
         # Move our item if we have one.
         if self.item:
