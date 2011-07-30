@@ -189,6 +189,12 @@ class Vector:
         return "<Vector (%g,%g,%g)>" % (self.x, self.y, self.z)
 
     def magnitude(self):
+        '''
+        Return the scalar magnitude (length from origin) of this Vector.
+
+        :rtype: :obj:`float`
+
+        '''
         return sqrt(
             self.x * self.x +
             self.y * self.y +
@@ -196,6 +202,13 @@ class Vector:
             )
 
     def normalize(self):
+        '''
+        Return a Vector of magnitude 1 pointing in the same direction as
+        this Vector.
+
+        :rtype: :class:`Vector`
+
+        '''
         m = self.magnitude()
         if m < tolerance:
             m = 1
@@ -206,6 +219,12 @@ class Vector:
         return Vector(*xyz)
 
     def reverse(self):
+        '''
+        Return a Vector pointing in the opposite direction from this one.
+
+        :rtype: :class:`Vector`
+
+        '''
         return Vector(-self.x, -self.y, -self.z)
 
     def __add__(self, r_v):
@@ -249,14 +268,14 @@ class Vector:
     def __invert__(self):
         return self.reverse()
 
-    def __xor__(self, r_v):
+    def __xor__(self, other):
         """Note: NOT eXclusive-OR, Vector Cross Product."""
-        if not isinstance(r_v, Vector):
+        if not isinstance(other, Vector):
             raise TypeError
         return Vector(
-            self.y * r_v.z - self.z * r_v.y,
-           -self.x * r_v.z + self.z * r_v.x,
-            self.x * r_v.y - self.y * r_v.x
+            self.y * other.z - self.z * other.y,
+           -self.x * other.z + self.z * other.x,
+            self.x * other.y - self.y * other.x
             )
 
     def triplescalar(self, v, w):
@@ -377,8 +396,11 @@ e31=self.e31; e32=self.e32; e33=self.e33
         return self.__op(r_v, sub)
 
     def __mul__(self, r_n):
+
         if isinstance(r_n, Matrix):
+
             exec self.make_local_variables
+
             me11=r_n.e11; me12=r_n.e12; me13=r_n.e13
             me21=r_n.e21; me22=r_n.e22; me23=r_n.e23
             me31=r_n.e31; me32=r_n.e32; me33=r_n.e33
@@ -397,20 +419,21 @@ e31=self.e31; e32=self.e32; e33=self.e33
                 e31*me13 + e32*me23 + e33*me33,
                 )
 
-        elif isinstance(r_n, Vector):
+        if isinstance(r_n, Vector):
+
             exec self.make_local_variables
+
             return Vector(
                 e11*r_n.x + e12*r_n.y + e13*r_n.z,
                 e21*r_n.x + e22*r_n.y + e23*r_n.z,
                 e31*r_n.x + e32*r_n.y + e33*r_n.z
                 )
 
-        elif isinstance(r_n, scalar_types):
+        if isinstance(r_n, scalar_types):
             tmp = Matrix(*((r_n,) * 9))
             return self.__op(tmp, mul)
 
-        else:
-            raise TypeError, r_n
+        raise TypeError, r_n
 
     def __div__(self, r_n):
         if not isinstance(r_n, scalar_types):
