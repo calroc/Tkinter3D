@@ -264,7 +264,7 @@ class Frustum:
 
 
 if __name__ == '__main__':
-    from scene import TkinterCanvasThing3D as dot
+    from scene import Thing3D as dot
 
     root = Tk()
     root.title("Rotating Cube Demo")

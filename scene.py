@@ -192,10 +192,11 @@ class Thing3D:
         pass
 
 
-class TkinterCanvasThing3D(Thing3D):
+    '''
 
     def __init__(self, canvas, x=0.0, y=0.0, z=0.0, **settings):
-        Thing3D.__init__(self, x, y, z)
+
+        self.vector = Vector(x, y, z)
 
         self.canvas = canvas
 

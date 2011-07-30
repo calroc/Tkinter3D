@@ -19,7 +19,7 @@
 #
 from Tkinter import Tk
 from canvas3d import Canvas3D, Frame3D, roty
-from scene import TkinterCanvasThing3D as dot
+from scene import Thing3D as dot
 
 
 root = Tk()

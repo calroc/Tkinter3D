@@ -11,7 +11,3 @@
       :members:
       :undoc-members:
 
-   .. autoclass:: TkinterCanvasThing3D
-      :members:
-      :undoc-members:
-      :inherited-members:
