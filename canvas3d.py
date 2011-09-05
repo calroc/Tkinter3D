@@ -42,7 +42,7 @@ class Canvas3D(Canvas):
     '''
 
     def __init__(self, master=None, fps=20, *args, **kw):
-        Canvas.__init__(self, *((master,) + args), **kw)
+        Canvas.__init__(self, master, *args, **kw)
 
         self.frame = Frame3D()
         self.items = {}
@@ -51,7 +51,7 @@ class Canvas3D(Canvas):
         self.h = float(self['height'])
 
         self.axes_on = True
-        self.xyaxes()
+        self._xy_axes()
 
         self.bind('<Configure>', self.resize_callback)
 
@@ -65,8 +65,10 @@ class Canvas3D(Canvas):
         self.u = G(self.h, self.y_arc_of_view)
 
         self._frustum = Frustum(
-            self.w, self.h,
-            self.x_arc_of_view, self.y_arc_of_view,
+            self.w,
+            self.h,
+            self.x_arc_of_view,
+            self.y_arc_of_view,
             self.focal_distance,
             )
 
@@ -82,10 +84,18 @@ class Canvas3D(Canvas):
         '''
         return self._frustum.visible(v)
 
-    def vectorToScreen(self, v):
+    def vector_to_screen(self, v):
+        '''
+        Return X and Y coordinates of Vector v projected onto the screen
+        space.
+
+        :param v: A Vector representing a 3D point.
+        :type v: :class:`math3d.Vector`
+        :returns: X, Y coordinates on Canvas.
+        :rtype: two-tuple of :obj:`int`
+
+        '''
         z = v.z
-        if z == 0.0:
-            z = 1 # z = tolerance?
         FD = self.focal_distance
         w = self.w / 2
         f = self.f 
@@ -97,11 +107,11 @@ class Canvas3D(Canvas):
             int(h - v.y * u / (z + u * FD))
             )
 
-    def xyaxes(self):
+    def _xy_axes(self):
         if not self.axes_on:
             return
 
-        w, h = int(self['width']), int(self['height'])
+        w, h = int(self.w), int(self.h)
 
         yaxis = self.items.get('yaxis', None)
         if yaxis:
@@ -116,16 +126,18 @@ class Canvas3D(Canvas):
             self.items['xaxis'] = self.create_line(w, h / 2, 0, h / 2)
 
     def resize_callback(self, event):
-        self.xyaxes()
+        self.w = float(event.width)
+        self.h = float(event.height)
+        self._xy_axes()
 
-    def startUpdating(self):
+    def start_updating(self):
         self._updater()
 
     def _updater(self):
         for thing, vector in self.frame.yieldTransformed():
 
             if self._frustum.visible(vector):
-                x, y = self.vectorToScreen(vector)
+                x, y = self.vector_to_screen(vector)
                 thing.render(x, y, 1.0)
 
             else:
@@ -300,5 +312,5 @@ if __name__ == '__main__':
 
     # Start everything running.
     delta()
-    c.startUpdating()
+    c.start_updating()
     root.mainloop()

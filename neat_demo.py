@@ -62,5 +62,5 @@ def delta():
 
 # Start everything running.
 delta()
-c.startUpdating()
+c.start_updating()
 root.mainloop()

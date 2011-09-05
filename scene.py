@@ -211,7 +211,7 @@ class Thing3D:
         self.canvas = canvas
 
         # Width in pixels of canvas dot.
-        self._width = (settings.pop('width', None) or 3)
+        self._width = settings.pop('width', None) or 3
 
         self.settings = settings
         self.settings.setdefault('fill', 'green')
