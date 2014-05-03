@@ -1,5 +1,5 @@
 #
-#    Copyright 2011 Simon Forman
+#    Copyright 2011, 2012, 2013, 2014 Simon Forman
 #
 #    This file is part of Tkinter3D.
 #

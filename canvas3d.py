@@ -1,5 +1,5 @@
 #
-#    Copyright 2011 Simon Forman
+#    Copyright 2011, 2012, 2013, 2014 Simon Forman
 #
 #    This file is part of Tkinter3D.
 #
@@ -216,12 +216,9 @@ class Frustum:
                 return False
             return acb + vz * bpN.z > 0.0
 
-        else:
-            if acl <= 0.0: return False
-            if acr <= 0.0: return False
-            if act <= 0.0: return False
-            if acb >  0.0: return True
+        if acl <= 0.0 or acr <= 0.0 or act <= 0.0:
             return False
+        return acb > 0.0
 
     def _getFrustum(self):
         """

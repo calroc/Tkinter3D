@@ -1,5 +1,5 @@
 #
-#    Copyright 2011 Simon Forman
+#    Copyright 2011, 2012, 2013, 2014 Simon Forman
 #
 #    This file is part of Tkinter3D.
 #
@@ -68,7 +68,7 @@ class Quaternion:
             self.v = Vector(x, y, z)
 
     def __repr__(self):
-        return "<Quaternion (%g, %s>" % (self.n, self.v.__repr__())
+        return "<Quaternion (%g, %s)>" % (self.n, self.v.__repr__())
 
     def magnitude(self):
         v = self.v
