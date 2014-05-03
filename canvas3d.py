@@ -134,6 +134,12 @@ class Canvas3D(Canvas):
         self._updater()
 
     def _updater(self):
+        self.do_frame()
+        self.update_idletasks()
+        self.update()
+        self.after(self.fps_ms, self._updater)
+
+    def do_frame(self):
         for thing, vector in self.frame.yieldTransformed():
 
             if self._frustum.visible(vector):
@@ -142,10 +148,6 @@ class Canvas3D(Canvas):
 
             else:
                 thing.hide()
-
-        self.update_idletasks()
-        self.update()
-        self.after(self.fps_ms, self._updater)
 
 
 class Frustum:
