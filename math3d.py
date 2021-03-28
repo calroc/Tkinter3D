@@ -20,7 +20,8 @@
 Classes and functions for doing 3D math with quaternions.
 '''
 from math import sin, cos, pi, sqrt, acos, atan2, asin
-from operator import add, sub, mul, div
+from operator import add, sub, mul #, div
+from operator import truediv as div
 
 
 tolerance = 0.00001 # A value "close enough" to zero.
@@ -28,7 +29,7 @@ tolerance = 0.00001 # A value "close enough" to zero.
 #: Tuple of scalar numeric types: int, float, and long.
 #: (If you import :mod:`math3d` and change this before importing other
 #: modules in this package it will affect their type-checking behavior.) 
-scalar_types = int, float, long
+scalar_types = int, float #, long
 
 
 radians = 180 / pi
@@ -113,7 +114,8 @@ class Quaternion:
             return self * Quaternion(0.0, p)
 
         else:
-            raise TypeError, p
+            #raise TypeError, p
+            raise TypeError
 
     def __div__(self, p):
         if not isinstance(p, scalar_types):
@@ -255,7 +257,8 @@ class Vector:
             return Vector(self.x * r_n, self.y * r_n, self.z * r_n)
 
         else:
-            raise TypeError, r_n
+            #raise TypeError, r_n
+            raise TypeError
 
     def __div__(self, r_n):
         if not isinstance(r_n, scalar_types):
@@ -312,7 +315,7 @@ e31=self.e31; e32=self.e32; e33=self.e33
         self.e33 = e33
 
     def __repr__(self):
-        exec self.make_local_variables
+        exec(self.make_local_variables)
         return "<Matrix (\n%f, %f, %f,\n%f, %f, %f,\n%f, %f, %f\n)>" % (
             e11,  e12,  e13,
             e21,  e22,  e23,
@@ -320,7 +323,7 @@ e31=self.e31; e32=self.e32; e33=self.e33
             )
 
     def determinant(self):
-        exec self.make_local_variables
+        exec(self.make_local_variables)
         return e11*e22*e33 - \
                e11*e32*e23 + \
                e21*e32*e13 - \
@@ -329,7 +332,7 @@ e31=self.e31; e32=self.e32; e33=self.e33
                e31*e22*e13
 
     def transpose(self):
-        exec self.make_local_variables
+        exec(self.make_local_variables)
         return Matrix(
             e11, e21, e31,
             e12, e22, e32,
@@ -338,7 +341,7 @@ e31=self.e31; e32=self.e32; e33=self.e33
 
     def __invert__(self):
         """~M"""
-        exec self.make_local_variables
+        exec(self.make_local_variables)
         d = self.determinant()
         if d == 0.0:
             d = 1.0
@@ -382,7 +385,8 @@ e31=self.e31; e32=self.e32; e33=self.e33
             r_v = Matrix(*((r_v,) * 9))
 
         elif not isinstance(r_v, Matrix):
-            raise TypeError, r_v
+            #raise TypeError, r_v
+            raise TypeError
 
         return self.__op(r_v, add)
 
@@ -391,7 +395,8 @@ e31=self.e31; e32=self.e32; e33=self.e33
             r_v = Matrix(*((r_v,) * 9))
 
         elif not isinstance(r_v, Matrix):
-            raise TypeError, r_v
+            #raise TypeError, r_v
+            raise TypeError
 
         return self.__op(r_v, sub)
 
@@ -399,41 +404,42 @@ e31=self.e31; e32=self.e32; e33=self.e33
 
         if isinstance(r_n, Matrix):
 
-            exec self.make_local_variables
+            exec(self.make_local_variables)
 
             me11=r_n.e11; me12=r_n.e12; me13=r_n.e13
             me21=r_n.e21; me22=r_n.e22; me23=r_n.e23
             me31=r_n.e31; me32=r_n.e32; me33=r_n.e33
 
             return Matrix(
-                e11*me11 + e12*me21 + e13*me31,
-                e11*me12 + e12*me22 + e13*me32,
-                e11*me13 + e12*me23 + e13*me33,
+                self.e11*me11 + self.e12*me21 + self.e13*me31,
+                self.e11*me12 + self.e12*me22 + self.e13*me32,
+                self.e11*me13 + self.e12*me23 + self.e13*me33,
 
-                e21*me11 + e22*me21 + e23*me31,
-                e21*me12 + e22*me22 + e23*me32,
-                e21*me13 + e22*me23 + e23*me33,
+                self.e21*me11 + self.e22*me21 + self.e23*me31,
+                self.e21*me12 + self.e22*me22 + self.e23*me32,
+                self.e21*me13 + self.e22*me23 + self.e23*me33,
 
-                e31*me11 + e32*me21 + e33*me31,
-                e31*me12 + e32*me22 + e33*me32,
-                e31*me13 + e32*me23 + e33*me33,
+                self.e31*me11 + self.e32*me21 + self.e33*me31,
+                self.e31*me12 + self.e32*me22 + self.e33*me32,
+                self.e31*me13 + self.e32*me23 + self.e33*me33,
                 )
 
         if isinstance(r_n, Vector):
 
-            exec self.make_local_variables
+            exec(self.make_local_variables)
 
             return Vector(
-                e11*r_n.x + e12*r_n.y + e13*r_n.z,
-                e21*r_n.x + e22*r_n.y + e23*r_n.z,
-                e31*r_n.x + e32*r_n.y + e33*r_n.z
+                self.e11*r_n.x + self.e12*r_n.y + self.e13*r_n.z,
+                self.e21*r_n.x + self.e22*r_n.y + self.e23*r_n.z,
+                self.e31*r_n.x + self.e32*r_n.y + self.e33*r_n.z
                 )
 
         if isinstance(r_n, scalar_types):
             tmp = Matrix(*((r_n,) * 9))
             return self.__op(tmp, mul)
 
-        raise TypeError, r_n
+        #raise TypeError, r_n
+        raise TypeError
 
     def __div__(self, r_n):
         if not isinstance(r_n, scalar_types):

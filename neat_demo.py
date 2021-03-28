@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Tkinter3D.  If not, see <http://www.gnu.org/licenses/>.
 #
-from Tkinter import Tk
+from tkinter import Tk
 from canvas3d import Canvas3D, Frame3D, roty
 from scene import Thing3D as dot
 

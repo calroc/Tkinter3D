@@ -95,7 +95,8 @@ class Frame3D:
         self.subframes = []
 
         if not isinstance(scale, scalar_types):
-            raise TypeError, scale
+            #raise TypeError, scale
+            raise TypeError
         self.s = scale
 
         # Translation.
@@ -110,7 +111,8 @@ class Frame3D:
                 len(translation) == 3
                 and all(isinstance(t, scalar_types) for t in translation)
                 ):
-                raise TypeError, translation
+                #raise TypeError, translation
+                raise TypeError
 
             self.T = Vector(*translation)
 
@@ -129,7 +131,8 @@ class Frame3D:
                 len(rotation) == 3
                 and all(isinstance(a, scalar_types) for a in rotation)
                 ):
-                raise TypeError, rotation
+                #raise TypeError, rotation
+                raise TypeError
 
             ax, ay, az = rotation
             self.RM = rotx(ax) * roty(ay) * rotz(az)

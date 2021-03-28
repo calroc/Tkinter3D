@@ -19,7 +19,7 @@
 '''
 A Docstring for canvas3d module.
 '''
-from Tkinter import Tk, Canvas
+from tkinter import Tk, Canvas
 from math3d import (
     Vector,
     planeNormalAndDistance,
@@ -137,7 +137,7 @@ class Canvas3D(Canvas):
         self.do_frame()
         self.update_idletasks()
         self.update()
-        self.after(self.fps_ms, self._updater)
+        self.after(int(self.fps_ms), self._updater)
 
     def do_frame(self):
         for thing, vector in self.frame.yieldTransformed():
@@ -258,8 +258,7 @@ class Frustum:
     def _getFrustumPlanes(self):
         if self._frustum_planes_dirty:
 
-            V = map(self.transform, self._getFrustum())
-
+            V = list(map(self.transform, self._getFrustum()))
             self._frustum_planes = tuple(
                 planeNormalAndDistance(V[i0], V[i1], V[i2])
                 for i0, i1, i2 in (
